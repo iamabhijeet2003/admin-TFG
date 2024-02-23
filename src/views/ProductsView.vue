@@ -28,7 +28,8 @@
                             <td>
                                 <router-link :to="{ name: 'SingleProductView', params: { id: product.id } }" class="btn btn-md btn-primary mx-2">View</router-link>
                                 <button class="btn btn-md btn-warning mx-2">Edit</button>
-                                <button class="btn btn-md btn-danger mx-2">Delete</button>
+                                <button @click="confirmDelete(product.id)" class="btn btn-md btn-danger mx-2">Delete</button>
+              
                             </td>
                         </tr>
                     </tbody>
@@ -66,6 +67,28 @@ export default {
                 this.loading = false;
             }
         },
+        async confirmDelete(productId) {
+            // Get the product name before confirming deletion
+            const productToDelete = this.products.find(product => product.id === productId);
+            const productName = productToDelete ? productToDelete.name : 'the product';
+
+            const confirmDelete = confirm(`Are you sure you want to delete ${productName}?`);
+            if (confirmDelete) {
+                try {
+                    await axios.delete(`http://127.0.0.1:8001/api/productss/${productId}`);
+                    alert('Product deleted successfully');
+                    // Refresh the product list after deletion
+                    this.fetchProducts();
+                } catch (error) {
+                    console.error('Error deleting product:', error);
+                    alert('Failed to delete product');
+                }
+            } else {
+                // Show the name of the product in the alert message
+                alert(`Deleting canceled for ${productName}`);
+            }
+        },
+
     },
 };
 </script>
