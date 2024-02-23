@@ -1,24 +1,35 @@
 <template>
     <div class="container">
         <div class="row">
-            <EditProduct></EditProduct>
             <div class="col">
-                <div v-if="loading"><span class="loader"></span></div>
-                <table v-if="!loading && products.length" class="table">
+                <h1 class="text-center h1 mt-3">Products Page</h1>
+                <EditProduct></EditProduct>
+            </div>
+            <div class="col-12">
+                <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
+                <table v-if="!loading && products.length" class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th>Operations</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product['@id']">
-                            <td><img :src="product.image_url" alt="Product Image" style="width: 100px;"></td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.description }}</td>
-                            <td>{{ product.price }}</td>
+                            <td><img :src="product.image_url" alt="Product Image" style="width: 80px;"></td>
+                            <td class="fw-bolder">{{ product.name }}</td>
+                            <td class="text-info">{{ product.description }}</td>
+                            <td class="text-primary">{{ product.price }}€</td>
+                            <td>{{ product.quantity }}</td>
+                            <td>
+                                <router-link :to="{ name: 'SingleProductView', params: { id: product.id } }" class="btn btn-md btn-primary mx-2">View</router-link>
+                                <button class="btn btn-md btn-warning mx-2">Edit</button>
+                                <button class="btn btn-md btn-danger mx-2">Delete</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
