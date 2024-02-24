@@ -22,7 +22,7 @@ export default {
 
     <SidebarLink to="/" icon="fas fa-home">Inicio</SidebarLink>
     <SidebarLink to="/products" icon="fa-solid fa-industry">Productos</SidebarLink>
-    <SidebarLink to="/contactes" icon="fa-regular fa-address-book">Categorias</SidebarLink>
+    <SidebarLink to="/categories" icon="fa-regular fa-address-book">Categorias</SidebarLink>
     <SidebarLink to="/sectors" icon="fa-solid fa-person-digging">Pedidos</SidebarLink>
     <SidebarLink to="/cicles" icon="fa-regular fa-rectangle-list">Cicles</SidebarLink>
     <SidebarLink to="/alumnes" icon="fa-solid fa-graduation-cap">Alumnat</SidebarLink>
