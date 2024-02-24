@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-center h1 mt-3">Products Page</h1>
-                <EditProduct></EditProduct>
+                <AddProduct></AddProduct>
             </div>
             <div class="col-12">
                 <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
@@ -42,10 +42,10 @@
   
 <script>
 import axios from 'axios';
-import EditProduct from './EditProduct.vue';
+import AddProduct from './AddProduct.vue';
 export default {
     components:{
-        EditProduct,
+        AddProduct,
     },
     data() {
         return {
