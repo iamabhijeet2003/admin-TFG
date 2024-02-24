@@ -5,6 +5,7 @@ import ProductView from '../views/ProductsView.vue'
 import SingleProductView from '../views/SingleProductView.vue'
 import CategoriesView from '../views/category/CategoriesView.vue';
 import SingleCategoryView from '../views/category/SingleCategoryView.vue'; 
+import AddProductPage from '../views/AddProductPage.vue';
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     component: SingleCategoryView, // Associate the route with the SingleCategoryView component
     props: true, // Pass route parameters as props to the component
   },
+  {
+    path: "/addproduct",
+    name:"addproduct",
+    component: AddProductPage
+  }
   
 ]
 

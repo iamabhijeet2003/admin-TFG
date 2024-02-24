@@ -24,6 +24,7 @@ export default {
     <SidebarLink to="/" icon="fas fa-home">Inicio</SidebarLink>
     
       <SidebarLink to="/products" icon="fa-solid fa-gift">Productos</SidebarLink>
+      <SidebarLink to="/addproduct" icon="fa fa-plus-circle ">Add Product</SidebarLink>
     
     <SidebarLink to="/categories" icon="fa fa-list-ul">Categorias</SidebarLink>
     <SidebarLink to="/sectors" icon="fa fa-shopping-cart">Pedidos</SidebarLink>
