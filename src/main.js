@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import "bootstrap/dist/js/bootstrap.min";
-
+import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import '@fortawesome/fontawesome-free/js/all'
 
 createApp(App).use(store).use(router).mount('#app')

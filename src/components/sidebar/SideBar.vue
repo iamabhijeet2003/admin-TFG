@@ -1,3 +1,4 @@
+<!--admin/src/components/sidebar/SideBar.vue-->
 <script>
 import SidebarLink from './SidebarLink'
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
@@ -21,18 +22,16 @@ export default {
     </h1>
 
     <SidebarLink to="/" icon="fas fa-home">Inicio</SidebarLink>
-    <SidebarLink to="/products" icon="fa-solid fa-industry">Productos</SidebarLink>
-    <SidebarLink to="/categories" icon="fa-regular fa-address-book">Categorias</SidebarLink>
-    <SidebarLink to="/sectors" icon="fa-solid fa-person-digging">Pedidos</SidebarLink>
-    <SidebarLink to="/cicles" icon="fa-regular fa-rectangle-list">Cicles</SidebarLink>
-    <SidebarLink to="/alumnes" icon="fa-solid fa-graduation-cap">Alumnat</SidebarLink>
-    <SidebarLink to="/ofertes" icon="fa-solid fa-list">Ofertes</SidebarLink>
- 
-    <span
-      class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
-    >
+    
+      <SidebarLink to="/products" icon="fa-solid fa-gift">Productos</SidebarLink>
+    
+    <SidebarLink to="/categories" icon="fa fa-list-ul">Categorias</SidebarLink>
+    <SidebarLink to="/sectors" icon="fa fa-shopping-cart">Pedidos</SidebarLink>
+    <SidebarLink to="/cicles" icon="fa fa-users">Clientes</SidebarLink>
+    <SidebarLink to="/alumnes" icon="fa fa-building">Inventory</SidebarLink>
+
+
+    <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
       <i class="fas fa-angle-double-left" />
     </span>
   </div>
@@ -61,9 +60,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .sidebar h1 {
   height: 2.5em;
 }
+
 .collapse-icon {
   position: absolute;
   bottom: 0;
@@ -71,6 +72,7 @@ export default {
   color: rgba(255, 255, 255, 0.7);
   transition: 0.2s linear;
 }
+
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;

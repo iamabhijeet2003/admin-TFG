@@ -1,3 +1,4 @@
+<!--/admin/src/components/sidebar/SidebarLink.vue-->
 <script>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
