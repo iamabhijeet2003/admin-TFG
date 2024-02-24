@@ -63,6 +63,7 @@
       };
     },
     methods: {
+        
         async submitForm() {
                 try {
                     const response = await axios.post('http://127.0.0.1:8001/api/productss', {
@@ -90,12 +91,24 @@
 
                     // Optionally, you can emit an event to notify parent components about the successful addition of the product
                     this.$emit('productAdded', response.data);
+                    this.fetchProducts();
+                    
                 } catch (error) {
                     this.message = 'Error al agregar el producto';
                     this.messageClass = 'alert alert-danger';
                     console.error('Error adding product:', error);
                 }
-                }
+                },
+                async fetchProducts() {
+                    try {
+                        // Realizar la solicitud para obtener la lista actualizada de productos
+                        const response = await axios.get('http://127.0.0.1:8001/api/productss');
+                        // Actualizar la lista de productos en la interfaz de usuario
+                        this.$emit('updateProducts', response.data);
+                    } catch (error) {
+                        console.error('Error fetching products:', error);
+                    }
+                    }
 
   }
   };

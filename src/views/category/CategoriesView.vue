@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col">
           <h1 class="text-center h1 mt-3">Categories Page</h1>
-          <ModalAddCategory></ModalAddCategory>
+          <AddCategory></AddCategory>
         </div>
         <div class="col-12">
           <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
@@ -39,7 +39,7 @@
   
   <script>
   import axios from 'axios';
-  import ModalAddCategory from './ModalAddCategory.vue';
+  import AddCategory from './ModalAddCategory.vue';
 
   export default {
     data() {
@@ -49,7 +49,7 @@
       };
     },
     components:{
-    ModalAddCategory,
+    AddCategory,
 },
     mounted() {
       this.fetchCategories();

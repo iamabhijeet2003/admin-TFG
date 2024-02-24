@@ -42,7 +42,7 @@
   
 <script>
 import axios from 'axios';
-import AddProduct from './AddProduct.vue';
+import AddProduct from './ModalAddProduct.vue';
 export default {
     components:{
         AddProduct,

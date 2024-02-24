@@ -17,28 +17,60 @@
             <input class="form-control" type="date" name="created_at" id="created_at">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+        <div v-if="message" :class="messageClass">{{ message }}</div>
+    
+    </form>
+      
     </div>
   </template>
   
   <script>
+   import axios from 'axios';
   export default {
     data() {
       return {
         formData: {
           name: '',
           description: ''
-        }
+        },
+        message: '', // Mensaje de éxito o error
+        messageClass: '' // Clase de Bootstrap para el mensaje
       };
     },
     methods: {
-      submitForm() {
+      async submitForm() {
         // Emit an event to the parent component
-        this.$emit('submit', this.formData);
-        // Reset form data
-        this.formData = { name: '', description: '' };
-      }
-    }
+        
+        try {
+                    const response = await axios.post('http://127.0.0.1:8001/api/categories', {
+                        "@context": "/api/contexts/Category",
+                        "@type": "Category",
+                        "name": this.formData.name,
+                        "description": this.formData.description,
+                        "created_at": this.formData.created_at,
+                    }, {
+                    headers: {
+                        'Content-Type': 'application/ld+json'
+                    }
+                    });
+                    console.log('Product added successfully:', response.data);
+                     // Establecer el mensaje de éxito
+                    this.message = 'Producto agregado correctamente';
+                    this.messageClass = 'alert alert-success';
+
+                    // Limpiar el formulario después de agregar el producto
+                    this.formData = {};
+
+                    // Optionally, you can emit an event to notify parent components about the successful addition of the product
+                    this.$emit('categoryAdded', response.data);
+                } catch (error) {
+                    this.message = 'Error al agregar la categoria';
+                    this.messageClass = 'alert alert-danger';
+                    console.error('Error adding category:', error);
+                }
+      },
+      
+    },
   };
   </script>
   
