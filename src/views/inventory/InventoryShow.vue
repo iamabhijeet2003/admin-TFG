@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col mx-5 px-4">
         <h1>Inventory</h1>
-        <table class="table">
+        <table class="table mx-3 table-striped">
           <thead>
             <tr>
               <th scope="col">Product ID</th>
@@ -14,7 +14,7 @@
               <th scope="col">Operations</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="p-2">
             <tr v-for="product in products" :key="product.id">
               <td>{{ product.id }}</td>
               <td><img :src="product.image_url" alt="Product Image" style="max-width: 100px;"></td>
