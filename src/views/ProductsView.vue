@@ -10,6 +10,7 @@
                 <table v-if="!loading && products.length" class="table table-striped">
                     <thead>
                         <tr>
+                            <th scope="col">Product Id</th>
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
@@ -20,6 +21,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product['@id']">
+                            <td class="fw-bolder">̣{{ product.id }}</td>
                             <td><img :src="product.image_url" alt="Product Image" style="width: 80px;"></td>
                             <td class="fw-bolder">{{ product.name }}</td>
                             <td class="text-info">{{ product.description }}</td>
@@ -27,7 +29,7 @@
                             <td>{{ product.quantity }}</td>
                             <td>
                                 <router-link :to="{ name: 'SingleProductView', params: { id: product.id } }" class="btn btn-md btn-primary mx-2">View</router-link>
-                                <button class="btn btn-md btn-warning mx-2">Edit</button>
+                                <router-link :to="{ name: 'EditProduct', params: { id: product.id } }" class="btn btn-md btn-warning mx-2">Edit Product</router-link>
                                 <button @click="confirmDelete(product.id)" class="btn btn-md btn-danger mx-2">Delete</button>
               
                             </td>

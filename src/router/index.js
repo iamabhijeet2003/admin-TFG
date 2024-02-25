@@ -7,7 +7,8 @@ import CategoriesView from '../views/category/CategoriesView.vue';
 import SingleCategoryView from '../views/category/SingleCategoryView.vue'; 
 import AddProductPage from '../views/AddProductPage.vue';
 import AddCategoryPage from '../views/category/AddCategoryPage.vue'; 
-
+import EditProduct from '../views/EditProduct.vue'
+import EditProductPage from '../views/EditProductPage.vue';
 
 const routes = [
   {
@@ -52,7 +53,18 @@ const routes = [
     path: "/addcategory",
     name:"addcategory",
     component: AddCategoryPage
-  }
+  },
+  {
+    path: '/products/:id/edit',
+    name: 'EditProduct',
+    component: EditProduct,
+    props: true,
+  },
+  {
+    path: '/edit-product',
+    name: 'EditProductPage',
+    component: EditProductPage
+  },
   
 ]
 

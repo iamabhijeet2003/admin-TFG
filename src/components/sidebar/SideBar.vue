@@ -25,9 +25,11 @@ export default {
     
       <SidebarLink to="/products" icon="fa-solid fa-gift">Productos</SidebarLink>
       <SidebarLink to="/addproduct" icon="fa fa-plus-circle ">Add Product</SidebarLink>
+      <SidebarLink to="/edit-product" icon="fa fa-plus-circle ">Edit Product</SidebarLink>
     
     <SidebarLink to="/categories" icon="fa fa-list-ul">Categorias</SidebarLink>
     <SidebarLink to="/addcategory" icon="fa fa-plus-circle">Add Category</SidebarLink>
+    
     <!--
     <SidebarLink to="/sectors" icon="fa fa-shopping-cart">Pedidos</SidebarLink>
     <SidebarLink to="/cicles" icon="fa fa-users">Clientes</SidebarLink>
