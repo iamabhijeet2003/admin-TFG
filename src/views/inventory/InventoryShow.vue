@@ -54,7 +54,7 @@
   
 <script>
 import axios from 'axios';
-
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
   methods: {
     async fetchInventory() {
       try {
-        const response = await axios.get('http://127.0.0.1:8001/api/products');
+        const response = await axios.get(`${API_ROOT_URL}/products`);
         this.products = response.data['hydra:member'];
       } catch (error) {
         console.error('Error fetching inventory:', error);
@@ -93,7 +93,7 @@ export default {
     },
     async updateProduct(product) {
       try {
-        const response = await axios.put(`http://127.0.0.1:8001/api/products/${product.id}`, {
+        const response = await axios.put(`${API_ROOT_URL}/products/${product.id}`, {
           "@context": "/api/contexts/Products",
           "@id": `/api/products/${product.id}`,
           "@type": "Products",
