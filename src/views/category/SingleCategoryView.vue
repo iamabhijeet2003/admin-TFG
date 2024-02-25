@@ -23,7 +23,7 @@
   
   <script>
   import axios from 'axios';
-  
+  import { API_ROOT_URL } from '@/apiConfig';
   export default {
     data() {
       return {
@@ -38,7 +38,7 @@
       async fetchCategory() {
         try {
           const categoryId = this.$route.params.id;
-          const response = await axios.get(`http://127.0.0.1:8001/api/categories/${categoryId}`);
+          const response = await axios.get(`${API_ROOT_URL}/categories/${categoryId}`);
           this.category = response.data;
         } catch (error) {
           console.error('Error fetching category:', error);

@@ -40,7 +40,7 @@
   <script>
   import axios from 'axios';
   import AddCategory from './ModalAddCategory.vue';
-
+  import { API_ROOT_URL } from '@/apiConfig';
   export default {
     data() {
       return {
@@ -53,11 +53,12 @@
 },
     mounted() {
       this.fetchCategories();
+     
     },
     methods: {
       async fetchCategories() {
         try {
-          const response = await axios.get('http://127.0.0.1:8001/api/categories');
+          const response = await axios.get(`${API_ROOT_URL}/categories`);
           this.categories = response.data['hydra:member'];
         } catch (error) {
           console.error('Error fetching categories:', error);
@@ -69,7 +70,7 @@
       const confirmDelete = confirm('Are you sure you want to delete this category?');
       if (confirmDelete) {
         try {
-          await axios.delete(`http://127.0.0.1:8001/api/categories/${categoryId}`);
+          await axios.delete(`${API_ROOT_URL}/categories/${categoryId}`);
           alert('Category deleted successfully');
           // Refresh the category list after deletion
           this.fetchCategories();
