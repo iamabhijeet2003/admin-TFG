@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <h1 class="h1 text-center">Edit Product</h1>
+            <h1 class="h1 text-center text-primary">Edit Product</h1>
             <div class="col">
                 <form @submit.prevent="submitForm">
                     <div class="form-group">
@@ -71,7 +71,7 @@ export default {
         async submitForm() {
             try {
                 const productId = this.$route.params.id; // Get the product ID from route params
-                const response = await axios.put(`http://127.0.0.1:8001/api/productss/${productId}`, {
+                const response = await axios.put(`http://127.0.0.1:8001/api/products/${productId}`, {
                     "@context": "/api/contexts/Products",
                     "@type": "Products",
                     "name": this.formData.name,
@@ -99,7 +99,7 @@ export default {
         async fetchProduct() {
             try {
                 const productId = this.$route.params.id;
-                const response = await axios.get(`http://127.0.0.1:8001/api/productss/${productId}`);
+                const response = await axios.get(`http://127.0.0.1:8001/api/products/${productId}`);
                 this.product = response.data;
             } catch (error) {
                 console.error('Error fetching product:', error);
