@@ -27,10 +27,12 @@ export default {
       <SidebarLink to="/addproduct" icon="fa fa-plus-circle ">Add Product</SidebarLink>
     
     <SidebarLink to="/categories" icon="fa fa-list-ul">Categorias</SidebarLink>
+    <SidebarLink to="/addcategory" icon="fa fa-plus-circle">Add Category</SidebarLink>
+    <!--
     <SidebarLink to="/sectors" icon="fa fa-shopping-cart">Pedidos</SidebarLink>
     <SidebarLink to="/cicles" icon="fa fa-users">Clientes</SidebarLink>
     <SidebarLink to="/alumnes" icon="fa fa-building">Inventory</SidebarLink>
-
+    -->
 
     <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
       <i class="fas fa-angle-double-left" />

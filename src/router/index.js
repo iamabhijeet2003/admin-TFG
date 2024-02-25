@@ -6,6 +6,8 @@ import SingleProductView from '../views/SingleProductView.vue'
 import CategoriesView from '../views/category/CategoriesView.vue';
 import SingleCategoryView from '../views/category/SingleCategoryView.vue'; 
 import AddProductPage from '../views/AddProductPage.vue';
+import AddCategoryPage from '../views/category/AddCategoryPage.vue'; 
+
 
 const routes = [
   {
@@ -45,6 +47,11 @@ const routes = [
     path: "/addproduct",
     name:"addproduct",
     component: AddProductPage
+  },
+  {
+    path: "/addcategory",
+    name:"addcategory",
+    component: AddCategoryPage
   }
   
 ]

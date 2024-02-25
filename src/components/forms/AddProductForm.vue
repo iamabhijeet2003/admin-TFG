@@ -36,14 +36,22 @@
                         <input type="text" class="form-control" id="image_url" v-model="formData.image_url">
                     </div>
 
-                    <div class="form-group">
-                        <!--Add here a loop to iterate and should the categories in the select tag-->
+                    <!-- <div class="form-group">
+                        Add here a loop to iterate and should the categories in the select tag
                         <label for="category">Category:</label>
                         <select class="form-control" id="category" v-model="formData.category">
                             <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name
                             }}</option>
                         </select>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select class="form-control" id="category" v-model="formData.category" multiple>
+                            <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name
+                            }}</option>
+                        </select>
                     </div>
+
 
 
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -67,9 +75,8 @@ export default {
                 price: 0,
                 quantity: 0,
                 created_at: '',
-                updated_at: '',
                 image_url: '',
-                category: ''
+                category: []
             },
             message: '', // Mensaje de éxito o error
             messageClass: '', // Clase de Bootstrap para el mensaje
@@ -93,12 +100,14 @@ export default {
                     "created_at": this.formData.created_at,
                     "updated_at": this.formData.updated_at,
                     "image_url": this.formData.image_url,
-                    "category": this.formData.category
+                    "category": this.formData.category,
+                   
                 }, {
                     headers: {
                         'Content-Type': 'application/ld+json'
                     }
                 });
+                
                 console.log('Product added successfully:', response.data);
                 // Establecer el mensaje de éxito
                 this.message = 'Producto agregado correctamente';
@@ -110,6 +119,8 @@ export default {
                 // Optionally, you can emit an event to notify parent components about the successful addition of the product
                 this.$emit('productAdded', response.data);
                 this.fetchProducts();
+
+                
 
             } catch (error) {
                 this.message = 'Error al agregar el producto';

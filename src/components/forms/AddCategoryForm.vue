@@ -1,4 +1,4 @@
-<!-- AddCategoryForm.vue -->
+<!-- src/components/forms/AddCategoryForm.vueAddCategoryForm.vue -->
 
 <template>
     <div class="container">
