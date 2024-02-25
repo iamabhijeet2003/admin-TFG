@@ -9,6 +9,8 @@ import AddProductPage from '../views/AddProductPage.vue';
 import AddCategoryPage from '../views/category/AddCategoryPage.vue'; 
 import EditProduct from '../views/EditProduct.vue'
 import EditProductPage from '../views/EditProductPage.vue';
+import InventoryShow from '../views/inventory/InventoryShow.vue';
+
 
 const routes = [
   {
@@ -64,6 +66,11 @@ const routes = [
     path: '/edit-product',
     name: 'EditProductPage',
     component: EditProductPage
+  },
+  {
+    path: '/inventory',
+    name: 'InventoryShow',
+    component: InventoryShow,
   },
   
 ]
