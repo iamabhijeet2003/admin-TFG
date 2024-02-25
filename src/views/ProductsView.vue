@@ -5,7 +5,7 @@
                 <h1 class="text-center h1 mt-3">Products Page</h1>
                 <AddProduct></AddProduct>
             </div>
-            <div class="col-12">
+            <div class="col-12 text-center">
                 <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
                 <table v-if="!loading && products.length" class="table table-striped">
                     <thead>
@@ -21,7 +21,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product['@id']">
-                            <td class="fw-bolder">̣{{ product.id }}</td>
+                            <td class="fw-bolder"> {{ product.id }}</td>
                             <td><img :src="product.image_url" alt="Product Image" style="width: 80px;"></td>
                             <td class="fw-bolder">{{ product.name }}</td>
                             <td class="text-info">{{ product.description }}</td>
@@ -61,7 +61,7 @@ export default {
     methods: {
         async fetchProducts() {
             try {
-                const response = await axios.get('http://127.0.0.1:8001/api/productss');
+                const response = await axios.get('http://127.0.0.1:8001/api/products');
                 this.products = response.data['hydra:member'];
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -77,7 +77,7 @@ export default {
             const confirmDelete = confirm(`Are you sure you want to delete ${productName}?`);
             if (confirmDelete) {
                 try {
-                    await axios.delete(`http://127.0.0.1:8001/api/productss/${productId}`);
+                    await axios.delete(`http://127.0.0.1:8001/api/products/${productId}`);
                     alert('Product deleted successfully');
                     // Refresh the product list after deletion
                     this.fetchProducts();
