@@ -21,7 +21,7 @@
   
   <script>
   import axios from 'axios';
-  
+  import { API_ROOT_URL } from '@/apiConfig';
   export default {
     data() {
       return {
@@ -36,7 +36,7 @@
       async fetchProduct() {
         try {
           const productId = this.$route.params.id; // Get product ID from route params
-          const response = await axios.get(`http://127.0.0.1:8001/api/products/${productId}`);
+          const response = await axios.get(`${API_ROOT_URL}/products/${productId}`);
           this.product = response.data;
         } catch (error) {
           console.error('Error fetching product:', error);

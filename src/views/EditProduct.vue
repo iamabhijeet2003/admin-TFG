@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import { API_ROOT_URL } from '@/apiConfig';
 
 export default {
     data() {
@@ -71,7 +72,7 @@ export default {
         async submitForm() {
             try {
                 const productId = this.$route.params.id; // Get the product ID from route params
-                const response = await axios.put(`http://127.0.0.1:8001/api/products/${productId}`, {
+                const response = await axios.put(`${API_ROOT_URL}/products/${productId}`, {
                     "@context": "/api/contexts/Products",
                     "@type": "Products",
                     "name": this.formData.name,

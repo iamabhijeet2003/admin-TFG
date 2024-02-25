@@ -45,6 +45,7 @@
 <script>
 import axios from 'axios';
 import AddProduct from './ModalAddProduct.vue';
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
     components:{
         AddProduct,
@@ -61,7 +62,7 @@ export default {
     methods: {
         async fetchProducts() {
             try {
-                const response = await axios.get('http://127.0.0.1:8001/api/products');
+                const response = await axios.get(`${API_ROOT_URL}/products`);
                 this.products = response.data['hydra:member'];
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -77,7 +78,7 @@ export default {
             const confirmDelete = confirm(`Are you sure you want to delete ${productName}?`);
             if (confirmDelete) {
                 try {
-                    await axios.delete(`http://127.0.0.1:8001/api/products/${productId}`);
+                    await axios.delete(`${API_ROOT_URL}/products/${productId}`);
                     alert('Product deleted successfully');
                     // Refresh the product list after deletion
                     this.fetchProducts();
