@@ -10,7 +10,7 @@ import AddCategoryPage from '../views/category/AddCategoryPage.vue';
 import EditProduct from '../views/EditProduct.vue'
 import EditProductPage from '../views/EditProductPage.vue';
 import InventoryShow from '../views/inventory/InventoryShow.vue';
-
+import Login from "../views/LoginView.vue";
 
 const routes = [
   {
@@ -72,6 +72,11 @@ const routes = [
     name: 'InventoryShow',
     component: InventoryShow,
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+},
   
 ]
 
