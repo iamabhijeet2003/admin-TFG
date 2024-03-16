@@ -4,14 +4,14 @@ import AddProduct from '../components/AddProduct.vue'
 import ProductView from '../views/ProductsView.vue'
 import SingleProductView from '../views/SingleProductView.vue'
 import CategoriesView from '../views/category/CategoriesView.vue';
-import SingleCategoryView from '../views/category/SingleCategoryView.vue'; 
+import SingleCategoryView from '../views/category/SingleCategoryView.vue';
 import AddProductPage from '../views/AddProductPage.vue';
-import AddCategoryPage from '../views/category/AddCategoryPage.vue'; 
+import AddCategoryPage from '../views/category/AddCategoryPage.vue';
 import EditProduct from '../views/EditProduct.vue'
 import EditProductPage from '../views/EditProductPage.vue';
 import InventoryShow from '../views/inventory/InventoryShow.vue';
 import Login from "../views/LoginView.vue";
-
+import OrderView from "../views/orders/OrdersView.vue"
 const routes = [
   {
     path: '/',
@@ -19,14 +19,14 @@ const routes = [
     component: HomeView
   },
   {
-    path : '/addproduct',
-    name : "addproduct",
+    path: '/addproduct',
+    name: "addproduct",
     component: AddProduct
 
   },
   {
-    path : '/products',
-    name : "products",
+    path: '/products',
+    name: "products",
     component: ProductView
 
   },
@@ -48,12 +48,12 @@ const routes = [
   },
   {
     path: "/addproduct",
-    name:"addproduct",
+    name: "addproduct",
     component: AddProductPage
   },
   {
     path: "/addcategory",
-    name:"addcategory",
+    name: "addcategory",
     component: AddCategoryPage
   },
   {
@@ -76,8 +76,13 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
-},
-  
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: OrderView,
+  },
+
 ]
 
 const router = createRouter({
