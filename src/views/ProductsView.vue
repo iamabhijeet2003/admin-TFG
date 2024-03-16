@@ -16,22 +16,31 @@
                             <th scope="col">Description</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
-                            <th>Operations</th>
+                            <th scope="col">View</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product['@id']">
                             <td class="fw-bolder"> {{ product.id }}</td>
-                            <td><img :src="product.image_url" alt="Product Image" style="width: 80px;"></td>
-                            <td class="fw-bolder">{{ product.name }}</td>
+                            <td><img :src="product.image" alt="Product Image" style="width: 80px;"></td>
+                            <td class="fw-bolder ">{{ product.name }}</td>
                             <td class="text-info">{{ product.description }}</td>
                             <td class="text-primary">{{ product.price }}€</td>
-                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.quantityAvailable }}</td>
                             <td>
-                                <router-link :to="{ name: 'SingleProductView', params: { id: product.id } }" class="btn btn-md btn-primary mx-2">View</router-link>
-                                <router-link :to="{ name: 'EditProduct', params: { id: product.id } }" class="btn btn-md btn-warning mx-2">Edit Product</router-link>
-                                <button @click="confirmDelete(product.id)" class="btn btn-md btn-danger mx-2">Delete</button>
-              
+                                <router-link :to="{ name: 'SingleProductView', params: { id: product.id } }"
+                                    class="btn btn-md btn-primary mx-2"><i class="bi bi-eye"></i></router-link>
+                            </td>
+                            <td>
+                                <router-link :to="{ name: 'EditProduct', params: { id: product.id } }"
+                                    class="btn btn-md btn-warning mx-2"><i
+                                        class="bi bi-pencil-square"></i></router-link>
+                            </td>
+                            <td>
+                                <button @click="confirmDelete(product.id)" class="btn btn-md btn-danger mx-2"><i
+                                        class="bi bi-trash3"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -41,13 +50,14 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import axios from 'axios';
 import AddProduct from './ModalAddProduct.vue';
 import { API_ROOT_URL } from '@/apiConfig';
+import { mapState } from "vuex";
 export default {
-    components:{
+    components: {
         AddProduct,
     },
     data() {
@@ -58,11 +68,23 @@ export default {
     },
     mounted() {
         this.fetchProducts();
+        if (this.isAuthenticated) {
+            this.fetchProducts();
+        }
+    },
+    computed: {
+        ...mapState(["isAuthenticated"]),
     },
     methods: {
         async fetchProducts() {
+
             try {
-                const response = await axios.get(`${API_ROOT_URL}/products`);
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${API_ROOT_URL}/products`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include token in request headers
+                    },
+                });
                 this.products = response.data['hydra:member'];
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -71,31 +93,46 @@ export default {
             }
         },
         async confirmDelete(productId) {
-            // Get the product name before confirming deletion
-            const productToDelete = this.products.find(product => product.id === productId);
-            const productName = productToDelete ? productToDelete.name : 'the product';
+    // Get the product name before confirming deletion
+    const productToDelete = this.products.find(product => product.id === productId);
+    const productName = productToDelete ? productToDelete.name : 'the product';
 
-            const confirmDelete = confirm(`Are you sure you want to delete ${productName}?`);
-            if (confirmDelete) {
-                try {
-                    await axios.delete(`${API_ROOT_URL}/products/${productId}`);
-                    alert('Product deleted successfully');
-                    // Refresh the product list after deletion
-                    this.fetchProducts();
-                } catch (error) {
-                    console.error('Error deleting product:', error);
-                    alert('Failed to delete product');
+    const confirmDelete = await this.$swal({
+        title: `Are you sure you want to delete ${productName}?`,
+        text: 'You will not be able to recover this product!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (confirmDelete.isConfirmed) {
+        const token = localStorage.getItem('token');
+        try {
+            await axios.delete(`${API_ROOT_URL}/products/${productId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 }
-            } else {
-                // Show the name of the product in the alert message
-                alert(`Deleting canceled for ${productName}`);
-            }
-        },
+            });
+            this.$swal('Deleted!', 'Product deleted successfully', 'success');
+            // Refresh the product list after deletion
+            this.fetchProducts();
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            this.$swal('Error', 'Failed to delete product', 'error');
+        }
+    } else {
+        // Show the name of the product in the alert message
+        this.$swal('Cancelled', `Deleting canceled for ${productName}`, 'info');
+    }
+},
+
 
     },
 };
 </script>
-  
+
 <style scoped>
 /* You can add custom styles here if needed */
 .loader {
@@ -119,4 +156,3 @@ export default {
     }
 }
 </style>
-  
