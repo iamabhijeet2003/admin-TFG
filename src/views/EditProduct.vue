@@ -18,8 +18,9 @@
                     </div>
                     <div class="form-group">
                         <label for="quantity">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" v-model="formData.quantity" :placeholder="product.quantity">
+                        <input type="number" class="form-control" id="quantity" v-model="formData.quantityAvailable" :placeholder="product.quantityAvailable">
                     </div>
+                    <!--
                     <div class="form-group">
                         <label for="created_at">Created At:</label>
                         <input type="date" class="form-control" id="created_at" v-model="formData.created_at" :placeholder="product.created_at">
@@ -27,11 +28,20 @@
                     <div class="form-group">
                         <label for="updated_at">Updated At:</label>
                         <input type="date" class="form-control" id="updated_at" v-model="formData.updated_at" :placeholder="product.updated_at">
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="image_url">Image URL:</label>
-                        <input type="text" class="form-control" id="image_url" v-model="formData.image_url" :placeholder="product.image_url">
+                        <input type="text" class="form-control" id="image_url" v-model="formData.image" :placeholder="product.image_url">
                     </div>
+
+                    <div class="form-group">
+                      
+                      <label for="category">Category:</label>
+                      <select class="form-control" id="category" v-model="formData.category">
+                          <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name
+                          }}</option>
+                      </select>
+                  </div>
                     <button type="submit" class="btn btn-primary">Update Product</button>
                     <div v-if="message" :class="messageClass">{{ message }}</div>
                 </form>
@@ -55,36 +65,42 @@ export default {
                 name: '',
                 description: '',
                 price: 0,
-                quantity: 0,
-                created_at: '',
-                updated_at: '',
-                image_url: '',
+                quantityAvailable: 0,
+                //created_at: '',
+                //updated_at: '',
+                image: '',
+                category: []
             },
             product: {}, // Initialize product object
             message: '',
             messageClass: '',
+            categories: []
         };
     },
     mounted() {
         this.fetchProduct();
+        this.fetchCategories();
     },
     methods: {
         async submitForm() {
             try {
                 const productId = this.$route.params.id; // Get the product ID from route params
+                const token = localStorage.getItem('token');
                 const response = await axios.put(`${API_ROOT_URL}/products/${productId}`, {
                     "@context": "/api/contexts/Products",
                     "@type": "Products",
                     "name": this.formData.name,
                     "description": this.formData.description,
                     "price": this.formData.price,
-                    "quantity": this.formData.quantity,
-                    "created_at": this.formData.created_at,
-                    "updated_at": this.formData.updated_at,
-                    "image_url": this.formData.image_url
+                    "quantityAvailable": this.formData.quantityAvailable,
+                    //"created_at": this.formData.created_at,
+                    //"updated_at": this.formData.updated_at,
+                    "image": this.formData.image,
+                    category: `/api/categories/${this.formData.category}`,
                 }, {
                     headers: {
-                        'Content-Type': 'application/ld+json'
+                        'Content-Type': 'application/ld+json',
+                        Authorization: `Bearer ${token}`,
                     }
                 });
 
@@ -94,18 +110,40 @@ export default {
             } catch (error) {
                 this.message = 'Error updating product';
                 this.messageClass = 'alert alert-danger';
+                console.log(this.formData)
                 console.error('Error updating product:', error);
             }
         },
         async fetchProduct() {
             try {
                 const productId = this.$route.params.id;
-                const response = await axios.get(`http://127.0.0.1:8001/api/products/${productId}`);
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://127.0.0.1:8000/api/products/${productId}`,{
+                    headers: {
+                        'Content-Type': 'application/ld+json',
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
                 this.product = response.data;
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
+        },
+        async fetchCategories() {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/categories',{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/ld+json'
+                    }
+                });
+                this.categories = response.data['hydra:member']; // Almacenar las categorías disponibles en el arreglo
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
         }
+
 
     }
 };
