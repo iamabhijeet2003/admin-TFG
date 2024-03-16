@@ -17,16 +17,16 @@
           <tbody class="p-2">
             <tr v-for="product in products" :key="product.id">
               <td>{{ product.id }}</td>
-              <td><img :src="product.image_url" alt="Product Image" style="max-width: 100px;"></td>
+              <td><img :src="product.image" alt="Product Image" style="max-width: 100px;"></td>
               <td>{{ product.name }}</td>
               <td>
-                <div v-if="product.quantity < 10" class="alert alert-danger d-flex justify-content-between">
-                  <span class="fs-4 fw-bolder">{{ product.quantity }}</span>
+                <div v-if="product.quantityAvailable < 10" class="alert alert-danger d-flex justify-content-between">
+                  <span class="fs-4 fw-bolder">{{ product.quantityAvailable }}</span>
                   <span class="badge rounded-pill fs-5 bg-danger text-white"> <i
                       class="fa fa-exclamation-triangle fa-lg"></i> Low Inventory</span>
                 </div>
                 <div v-else class="alert alert-primary">
-                  <span class="fs-4 fw-bolder">{{ product.quantity }}</span>
+                  <span class="fs-4 fw-bolder">{{ product.quantityAvailable }}</span>
                 </div>
               </td>
               <td>
@@ -35,7 +35,7 @@
                   <button class="btn btn-outline-danger" type="button" @click="decrementQuantity(product)">
                     <i class="fa fa-minus" aria-hidden="true"></i>
                   </button>
-                  <input type="number" class="form-control text-center" v-model="product.quantity" min="0">
+                  <input type="number" class="form-control text-center" v-model="product.quantityAvailable" min="0">
                   <button class="btn btn-outline-primary" type="button" @click="incrementQuantity(product)">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                   </button>
@@ -67,7 +67,13 @@ export default {
   methods: {
     async fetchInventory() {
       try {
-        const response = await axios.get(`${API_ROOT_URL}/products`);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_ROOT_URL}/products`,{
+          headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/ld+json'
+            }
+        });
         this.products = response.data['hydra:member'];
       } catch (error) {
         console.error('Error fetching inventory:', error);
@@ -75,7 +81,7 @@ export default {
     },
     async incrementQuantity(product) {
       try {
-        product.quantity++;
+        product.quantityAvailable++;
         await this.updateProduct(product);
       } catch (error) {
         console.error('Error updating product:', error);
@@ -83,8 +89,8 @@ export default {
     },
     async decrementQuantity(product) {
       try {
-        if (product.quantity > 0) {
-          product.quantity--;
+        if (product.quantityAvailable > 0) {
+          product.quantityAvailable--;
           await this.updateProduct(product);
         }
       } catch (error) {
@@ -93,14 +99,16 @@ export default {
     },
     async updateProduct(product) {
       try {
+        const token = localStorage.getItem('token');
         const response = await axios.put(`${API_ROOT_URL}/products/${product.id}`, {
           "@context": "/api/contexts/Products",
           "@id": `/api/products/${product.id}`,
           "@type": "Products",
-          "quantity": product.quantity
+          "quantityAvailable": product.quantityAvailable
         }, {
           headers: {
-            'Content-Type': 'application/ld+json'
+            'Content-Type': 'application/ld+json',
+            Authorization: `Bearer ${token}`,
           }
         });
         console.log('Product updated successfully:', response.data);
