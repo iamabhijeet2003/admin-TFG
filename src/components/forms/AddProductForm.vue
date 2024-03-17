@@ -12,33 +12,37 @@
                         <label for="description">Description:</label>
                         <textarea class="form-control" id="description" v-model="formData.description"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input type="number" class="form-control" id="price" v-model="formData.price">
-                    </div>
-                    <div class="form-group">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" v-model="formData.quantityAvailable">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="price">Price:</label>
+                            <input type="number" class="form-control" id="price" v-model="formData.price">
+                        </div>
+                        <div class="form-group col">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" class="form-control" id="quantity"
+                                v-model="formData.quantityAvailable">
+                        </div>
                     </div>
 
-            
+
                     <div class="form-group">
-                        <label for="image_url">Image url At:</label>
+                        <label for="image_url">Image url:</label>
                         <input type="text" class="form-control" id="image_url" v-model="formData.image">
                     </div>
 
-                     <div class="form-group">
-                      
-                      <label for="category">Category:</label>
-                      <select class="form-control" id="category" v-model="formData.category">
-                          <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name
-                          }}</option>
-                      </select>
-                  </div>
+                    <div class="form-group">
+
+                        <label for="category">Category:</label>
+                        <select class="form-select" aria-label="Default select example" id="category" v-model="formData.category">
+                            <option v-for="category in categories" :key="category.id" :value="category.id">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </div>
 
 
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-3">Add Product</button>
 
                     <div v-if="message" :class="messageClass">{{ message }}</div>
                 </form>
@@ -71,47 +75,47 @@ export default {
         this.fetchCategories(); // Al montar el componente, cargar las categorías disponibles
     },
     methods: {
-        
+
         async submitForm() {
-    try {
-        const token = localStorage.getItem('token');
-        const response = await axios.post('http://127.0.0.1:8000/api/products', {
-            name: this.formData.name,
-            description: this.formData.description,
-            price: this.formData.price,
-            category: `/api/categories/${this.formData.category}`, // Adjusted category structure
-            quantityAvailable: this.formData.quantityAvailable, // Added quantityAvailable
-            image: this.formData.image
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/ld+json'
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.post('http://127.0.0.1:8000/api/products', {
+                    name: this.formData.name,
+                    description: this.formData.description,
+                    price: this.formData.price,
+                    category: `/api/categories/${this.formData.category}`, // Adjusted category structure
+                    quantityAvailable: this.formData.quantityAvailable, // Added quantityAvailable
+                    image: this.formData.image
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/ld+json'
+                    }
+                });
+                console.log('Product added successfully:', response.data);
+
+                // Set the success message
+                this.message = 'Producto agregado correctamente';
+                this.messageClass = 'alert alert-success';
+
+                // Clear the form after adding the product
+                this.formData = {};
+
+                // Optionally, you can emit an event to notify parent components about the successful addition of the product
+                this.$emit('productAdded', response.data);
+                this.fetchProducts();
+            } catch (error) {
+                this.message = 'Error al agregar el producto';
+                this.messageClass = 'alert alert-danger';
+                console.error('Error adding product:', error);
             }
-        });
-        console.log('Product added successfully:', response.data);
-
-        // Set the success message
-        this.message = 'Producto agregado correctamente';
-        this.messageClass = 'alert alert-success';
-
-        // Clear the form after adding the product
-        this.formData = {};
-
-        // Optionally, you can emit an event to notify parent components about the successful addition of the product
-        this.$emit('productAdded', response.data);
-        this.fetchProducts();
-    } catch (error) {
-        this.message = 'Error al agregar el producto';
-        this.messageClass = 'alert alert-danger';
-        console.error('Error adding product:', error);
-    }
-},
+        },
 
         async fetchProducts() {
             try {
                 const token = localStorage.getItem('token');
                 // Realizar la solicitud para obtener la lista actualizada de productos
-                const response = await axios.get('http://127.0.0.1:8000/api/products',{
+                const response = await axios.get('http://127.0.0.1:8000/api/products', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/ld+json'
@@ -126,7 +130,7 @@ export default {
         async fetchCategories() {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/categories',{
+                const response = await axios.get('http://127.0.0.1:8000/api/categories', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/ld+json'
