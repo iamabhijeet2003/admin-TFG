@@ -58,7 +58,12 @@
     methods: {
       async fetchCategories() {
         try {
-          const response = await axios.get(`${API_ROOT_URL}/categories`);
+          const token = localStorage.getItem('token')
+          const response = await axios.get(`${API_ROOT_URL}/categories`,{
+            headers:{
+              Authorization: `Bearer ${token}`,
+            }
+          });
           this.categories = response.data['hydra:member'];
         } catch (error) {
           console.error('Error fetching categories:', error);
@@ -70,7 +75,12 @@
       const confirmDelete = confirm('Are you sure you want to delete this category?');
       if (confirmDelete) {
         try {
-          await axios.delete(`${API_ROOT_URL}/categories/${categoryId}`);
+          const token = localStorage.getItem('token')
+          await axios.delete(`${API_ROOT_URL}/categories/${categoryId}`,{
+            headers:{
+              Authorization: `Bearer ${token}`,
+            }
+          });
           alert('Category deleted successfully');
           // Refresh the category list after deletion
           this.fetchCategories();
