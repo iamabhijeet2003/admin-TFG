@@ -37,8 +37,13 @@
     methods: {
       async fetchCategory() {
         try {
+          const token = localStorage.getItem('token')
           const categoryId = this.$route.params.id;
-          const response = await axios.get(`${API_ROOT_URL}/categories/${categoryId}`);
+          const response = await axios.get(`${API_ROOT_URL}/categories/${categoryId}`,{
+            headers:{
+              Authorization: `Bearer ${token}`,
+            }
+          });
           this.category = response.data;
         } catch (error) {
           console.error('Error fetching category:', error);
