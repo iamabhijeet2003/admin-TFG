@@ -1,5 +1,6 @@
 <template>
   <Sidebar />
+  <NavBar></NavBar>
   <div :style="{ 'margin-left': sidebarWidth }"></div>
 
   <router-view></router-view>
@@ -9,12 +10,13 @@
 import Sidebar from '@/components/sidebar/SideBar'
 import { sidebarWidth } from '@/components/sidebar/state'
 import { mapGetters, mapActions } from 'vuex';
+import NavBar from './components/navbar/NavBar.vue';
 export default {
   name: 'App',
   async mounted() {
     //await this.$store.commit('initialiseStore')
   },
-  components: { Sidebar },
+  components: { Sidebar, NavBar },
   setup() {
     return { sidebarWidth }
   },
