@@ -6,6 +6,11 @@
                 <AddProduct></AddProduct>
             </div>
             <div class="col-12 text-center">
+                <!-- Sort buttons -->
+            <div class="btn-group mt-3">
+                <button @click="sortByPrice('asc')" class="btn btn-sm btn-primary">Sort by Price (Asc)</button>
+                <button @click="sortByPrice('desc')" class="btn btn-sm btn-primary">Sort by Price (Desc)</button>
+            </div>
                 <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
                 <table v-if="!loading && products.length" class="table table-striped">
                     <thead>
@@ -127,7 +132,25 @@ export default {
         this.$swal('Cancelled', `Deleting canceled for ${productName}`, 'info');
     }
 },
+async sortByPrice(order) {
+            // Set loading to true while fetching data
+            this.loading = true;
 
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${API_ROOT_URL}/products?order[price]=${order}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include token in request headers
+                    },
+                });
+                this.products = response.data['hydra:member'];
+            } catch (error) {
+                console.error('Error fetching sorted products:', error);
+            } finally {
+                // Set loading to false after fetching data
+                this.loading = false;
+            }
+        },
 
     },
 };
