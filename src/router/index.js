@@ -12,75 +12,98 @@ import EditProductPage from '../views/EditProductPage.vue';
 import InventoryShow from '../views/inventory/InventoryShow.vue';
 import Login from "../views/LoginView.vue";
 import OrderView from "../views/orders/OrdersView.vue"
+import MainLayout from '../layouts/MainLayout.vue'
+import LoginLayout from '../layouts/LoginLayout.vue'
+import UserView from '../views/user/UsersView.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/addproduct',
-    name: "addproduct",
-    component: AddProduct
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: HomeView
+      },
+      {
+        path: '/addproduct',
+        name: "addproduct",
+        component: AddProduct
+
+      },
+      {
+        path: '/products',
+        name: "products",
+        component: ProductView
+
+      },
+      {
+        path: '/product/:id',
+        name: 'SingleProductView',
+        component: SingleProductView
+      },
+      {
+        path: '/categories',
+        name: 'Categories',
+        component: CategoriesView,
+      },
+      {
+        path: '/categories/:id', // Define a route parameter ':id' to capture the category ID
+        name: 'SingleCategoryView', // Specify the route name
+        component: SingleCategoryView, // Associate the route with the SingleCategoryView component
+        props: true, // Pass route parameters as props to the component
+      },
+      {
+        path: "/addproduct",
+        name: "addproduct",
+        component: AddProductPage
+      },
+      {
+        path: "/addcategory",
+        name: "addcategory",
+        component: AddCategoryPage
+      },
+      {
+        path: '/products/:id/edit',
+        name: 'EditProduct',
+        component: EditProduct,
+        props: true,
+      },
+      {
+        path: '/edit-product',
+        name: 'EditProductPage',
+        component: EditProductPage
+      },
+      {
+        path: '/inventory',
+        name: 'InventoryShow',
+        component: InventoryShow,
+      },
+
+      {
+        path: "/orders",
+        name: "Orders",
+        component: OrderView,
+      },
+      {
+        path: "/users",
+        name: "users",
+        component: UserView,
+      },
+    ]
 
   },
-  {
-    path: '/products',
-    name: "products",
-    component: ProductView
-
-  },
-  {
-    path: '/product/:id',
-    name: 'SingleProductView',
-    component: SingleProductView
-  },
-  {
-    path: '/categories',
-    name: 'Categories',
-    component: CategoriesView,
-  },
-  {
-    path: '/categories/:id', // Define a route parameter ':id' to capture the category ID
-    name: 'SingleCategoryView', // Specify the route name
-    component: SingleCategoryView, // Associate the route with the SingleCategoryView component
-    props: true, // Pass route parameters as props to the component
-  },
-  {
-    path: "/addproduct",
-    name: "addproduct",
-    component: AddProductPage
-  },
-  {
-    path: "/addcategory",
-    name: "addcategory",
-    component: AddCategoryPage
-  },
-  {
-    path: '/products/:id/edit',
-    name: 'EditProduct',
-    component: EditProduct,
-    props: true,
-  },
-  {
-    path: '/edit-product',
-    name: 'EditProductPage',
-    component: EditProductPage
-  },
-  {
-    path: '/inventory',
-    name: 'InventoryShow',
-    component: InventoryShow,
-  },
-  {
+ {
     path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/orders",
-    name: "Orders",
-    component: OrderView,
+    component: LoginLayout,
+    children: [
+      {
+        path: '',
+        name: "Login",
+        component: Login,
+      }
+    ]
+
   },
 
 ]
