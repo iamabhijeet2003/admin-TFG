@@ -29,6 +29,7 @@ export default {
 
     <SidebarLink to="/categories" icon="fa fa-list-ul">Categories</SidebarLink>
     <SidebarLink to="/addcategory" icon="fa fa-plus-circle">Add Category</SidebarLink>
+    <SidebarLink to="/editcategory" icon="fa fa-pencil">Edit Category</SidebarLink>
     <SidebarLink to="/orders" icon="fa fa-shopping-cart">Orders</SidebarLink>
     <SidebarLink to="/inventory" icon="fa fa-building">Inventory</SidebarLink>
     <SidebarLink to="/users" icon="fa fa-user">Users</SidebarLink>
