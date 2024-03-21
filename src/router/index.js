@@ -15,6 +15,7 @@ import OrderView from "../views/orders/OrdersView.vue"
 import MainLayout from '../layouts/MainLayout.vue'
 import LoginLayout from '../layouts/LoginLayout.vue'
 import UserView from '../views/user/UsersView.vue'
+import EditCategory from '@/components/forms/EditCategoryForm.vue'
 const routes = [
   {
     path: '/',
@@ -89,6 +90,11 @@ const routes = [
         path: "/users",
         name: "users",
         component: UserView,
+      },
+      {
+        path: "/editcategory",
+        name: "editcategory",
+        component: EditCategory,
       },
     ]
 
