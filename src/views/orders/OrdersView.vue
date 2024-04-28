@@ -8,6 +8,7 @@
                     <th>User ID</th>
                     <th>Total Price</th>
                     <th>Created At</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -16,6 +17,14 @@
                     <td>{{ extractUserId(order.userId) }}</td>
                     <td>{{ order.total }}</td>
                     <td>{{ formatDateTime(order.created_at) }}</td>
+                    <td>
+                        <span :class="getStatusClass(order.prepared)">
+                            <i v-if="order.prepared" class="bi bi-check-all"></i>
+                            <i v-else-if="order.prepared === false" class="bi bi-x-square"></i>
+                            <i v-else class="bi bi-hourglass"></i>
+                            {{ getStatusText(order.prepared) }}
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -44,26 +53,42 @@ export default {
                     }
                 });
                 this.orders = response.data['hydra:member'];
-                console.log(response.data)
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         },
         extractUserId(userUrl) {
-            // Split the user URL by '/' and get the last element which is the user ID
             const parts = userUrl.split('/');
             return parts[parts.length - 1];
         },
         formatDateTime(dateTimeString) {
-      const dateTime = new Date(dateTimeString);
-      const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-      const formattedTime = dateTime.toLocaleTimeString('en-US', options);
-      const day = dateTime.getDate();
-      const month = dateTime.getMonth() + 1; // Month is zero-indexed, so we add 1
-      const year = dateTime.getFullYear();
-      const formattedDate = `${day}/${month}/${year}`;
-      return `${formattedDate}, ${formattedTime}`;
-    }
+            const dateTime = new Date(dateTimeString);
+            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+            const formattedTime = dateTime.toLocaleTimeString('en-US', options);
+            const day = dateTime.getDate();
+            const month = dateTime.getMonth() + 1;
+            const year = dateTime.getFullYear();
+            const formattedDate = `${day}/${month}/${year}`;
+            return `${formattedDate}, ${formattedTime}`;
+        },
+        getStatusText(prepared) {
+            if (prepared === true) {
+                return 'Prepared';
+            } else if (prepared === false) {
+                return 'Canceled';
+            } else {
+                return 'Pending';
+            }
+        },
+        getStatusClass(prepared) {
+            if (prepared === true) {
+                return 'text-success fw-bolder fs-5';
+            } else if (prepared === false) {
+                return 'text-danger fw-bolder fs-5';
+            } else {
+                return 'text-warning fw-bolder fs-5';
+            }
+        }
     }
 };
 </script>
