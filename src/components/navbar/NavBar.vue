@@ -6,7 +6,7 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown"> <!-- Add justify-content-end class here -->
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown"> 
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -27,6 +27,9 @@
                   <li><a class="dropdown-item" href="#">Something else here</a></li>
                 </ul>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -34,6 +37,10 @@
     </div>
   </template>
   
+
+  <script>
+
+</script>
   <style scoped>
   :root {
     --navbar-bg-color: #500af3;
