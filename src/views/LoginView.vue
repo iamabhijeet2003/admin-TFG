@@ -24,28 +24,8 @@
       </div>
 
     </form>
-
-    <div class="banner">
-      <h1 class="wel_text">Welcome Back!</h1><br>
-      <p class="para"></p>
-    </div>
   </div>
-  <!--
-    <div>
-      <h1>LOGIN</h1>
-      <form @submit="login">
-        <input v-model="email" placeholder="email" />
-        <br />
-        <br />
-        <input v-model="password" placeholder="password" type="password" />
-        <br />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
-    <div v-if="errorMessage" class="alert alert-danger" role="alert">
-        {{ errorMessage }}
-      </div>-->
+ 
 </template>
 
 <script>
@@ -106,7 +86,9 @@ export default {
         localStorage.setItem("userId", userId)
 
         // Redirect to products page on successful login
-        this.$router.push({ name: 'products' });
+        //if (userId === 'role_admin') {
+          //this.$router.push({ name: 'admin' }); // Redirect to the admin dashboard
+        //} 
         console.log("Login successful!");
         // console.log("Fetching products...");
         // const productsResponse = await fetch("http://localhost:8001/api/productss", {
@@ -115,7 +97,7 @@ export default {
         //   },
         // });
         //console.log("Products response:", productsResponse);
-        this.$router.push({ name: 'products' });
+        this.$router.push({ name: 'home' });
         console.log("Login successful!");
       } else {
         // Show error message for incorrect username or password
