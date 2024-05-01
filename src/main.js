@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/js/all'
 import VueApexCharts from "vue3-apexcharts";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
+import './index.css'
 
 createApp(App)
     .use(store)
