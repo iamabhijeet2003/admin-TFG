@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
-
+import createPersistedState from "vuex-persistedstate";
+/* eslint-disable */
 export default createStore({
   state: {
     user: null,
@@ -40,5 +41,6 @@ export default createStore({
     },
   },
   modules: {
-  }
+  },
+  plugins: [createPersistedState()],
 })
