@@ -1,117 +1,84 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AddProduct from '../components/AddProduct.vue'
-import ProductView from '../views/ProductsView.vue'
-import SingleProductView from '../views/SingleProductView.vue'
-import CategoriesView from '../views/category/CategoriesView.vue';
-import SingleCategoryView from '../views/category/SingleCategoryView.vue';
-import AddProductPage from '../views/AddProductPage.vue';
-import AddCategoryPage from '../views/category/AddCategoryPage.vue';
-import EditProduct from '../views/EditProduct.vue'
-import EditProductPage from '../views/EditProductPage.vue';
-import InventoryShow from '../views/inventory/InventoryShow.vue';
-import Login from "../views/LoginView.vue";
-import OrderView from "../views/orders/OrdersView.vue"
-import MainLayout from '../layouts/MainLayout.vue'
-import LoginLayout from '../layouts/LoginLayout.vue'
-import UserView from '../views/user/UsersView.vue'
-import EditCategory from '@/components/forms/EditCategoryForm.vue'
+import * as components from './imports';
+
 const routes = [
   {
     path: '/',
-    component: MainLayout,
-    children: [
-      {
-        path: '',
-        name: 'home',
-        component: HomeView
-      },
-      {
-        path: '/addproduct',
-        name: "addproduct",
-        component: AddProduct
-
-      },
-      {
-        path: '/products',
-        name: "products",
-        component: ProductView
-
-      },
-      {
-        path: '/product/:id',
-        name: 'SingleProductView',
-        component: SingleProductView
-      },
-      {
-        path: '/categories',
-        name: 'Categories',
-        component: CategoriesView,
-      },
-      {
-        path: '/categories/:id', // Define a route parameter ':id' to capture the category ID
-        name: 'SingleCategoryView', // Specify the route name
-        component: SingleCategoryView, // Associate the route with the SingleCategoryView component
-        props: true, // Pass route parameters as props to the component
-      },
-      {
-        path: "/addproduct",
-        name: "addproduct",
-        component: AddProductPage
-      },
-      {
-        path: "/addcategory",
-        name: "addcategory",
-        component: AddCategoryPage
-      },
-      {
-        path: '/products/:id/edit',
-        name: 'EditProduct',
-        component: EditProduct,
-        props: true,
-      },
-      {
-        path: '/edit-product',
-        name: 'EditProductPage',
-        component: EditProductPage
-      },
-      {
-        path: '/inventory',
-        name: 'InventoryShow',
-        component: InventoryShow,
-      },
-
-      {
-        path: "/orders",
-        name: "Orders",
-        component: OrderView,
-      },
-      {
-        path: "/users",
-        name: "users",
-        component: UserView,
-      },
-      {
-        path: "/editcategory",
-        name: "editcategory",
-        component: EditCategory,
-      },
-    ]
-
+    name: 'Home',
+    component: components.HomeView
   },
- {
+  {
+    path: '/addproduct',
+    name: "addproduct",
+    component: components.AddProduct
+  },
+  {
+    path: '/products',
+    name: "products",
+    component: components.ProductView
+  },
+  {
+    path: '/product/:id',
+    name: 'SingleProductView',
+    component: components.SingleProductView
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: components.CategoriesView,
+  },
+  {
+    path: '/categories/:id',
+    name: 'SingleCategoryView',
+    component: components.SingleCategoryView,
+    props: true,
+  },
+  {
+    path: "/addproduct",
+    name: "addproduct",
+    component: components.AddProductPage
+  },
+  {
+    path: "/addcategory",
+    name: "addcategory",
+    component: components.AddCategoryPage
+  },
+  {
+    path: '/products/:id/edit',
+    name: 'EditProduct',
+    component: components.EditProduct,
+    props: true,
+  },
+  {
+    path: '/edit-product',
+    name: 'EditProductPage',
+    component: components.EditProductPage
+  },
+  {
+    path: '/inventory',
+    name: 'InventoryShow',
+    component: components.InventoryShow,
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: components.OrderView,
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: components.UserView,
+  },
+  {
+    path: "/editcategory",
+    name: "editcategory",
+    component: components.EditCategory,
+  },
+  {
     path: "/login",
-    component: LoginLayout,
-    children: [
-      {
-        path: '',
-        name: "Login",
-        component: Login,
-      }
-    ]
-
+    name: "Login",
+    component: components.Login,
   },
-
 ]
 
 const router = createRouter({
