@@ -1,6 +1,6 @@
 <template>
-  <Sidebar />
-  <NavBar></NavBar>
+  <Sidebar v-if="$route.name !== 'Login'"/>
+  <NavBar v-if="$route.name !== 'Login'"></NavBar>
   <div :style="{ 'margin-left': sidebarWidth }"></div>
 
   <router-view></router-view>
