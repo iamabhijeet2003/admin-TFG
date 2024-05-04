@@ -93,6 +93,12 @@ const routes = [
     name: "Login",
     component: components.Login,
   },
+  {
+    path: "/contacts",
+    name: "contacts",
+    component: components.ContactList,
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = createRouter({
