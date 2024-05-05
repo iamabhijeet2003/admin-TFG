@@ -13,4 +13,5 @@ export const Login = () => import("../views/LoginView.vue");
 export const OrderView = () => import("../views/orders/OrdersView.vue");
 export const UserView = () => import('../views/user/UsersView.vue');
 export const EditCategory = () => import('@/components/forms/EditCategoryForm.vue');
-export const ContactList = () => import('../views/contact/ContactList.vue')
+export const ContactList = () => import('../views/contact/ContactList.vue');
+export const Error404 = () => import("@/components/errors/NotFound404.vue");
