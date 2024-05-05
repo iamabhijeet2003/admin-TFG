@@ -99,6 +99,11 @@ const routes = [
     component: components.ContactList,
     meta: { requiresAuth: true }
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: components.Error404,
+  }
 ]
 
 const router = createRouter({
