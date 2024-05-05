@@ -7,10 +7,10 @@
             </div>
             <div class="col-12 text-center">
                 <!-- Sort buttons -->
-            <div class="btn-group mt-3">
-                <button @click="sortByPrice('asc')" class="btn btn-sm btn-primary">Sort by Price (Asc)</button>
-                <button @click="sortByPrice('desc')" class="btn btn-sm btn-primary">Sort by Price (Desc)</button>
-            </div>
+                <div class="btn-group mt-3">
+                    <button @click="sortByPrice('asc')" class="btn btn-sm btn-primary">Sort by Price (Asc)</button>
+                    <button @click="sortByPrice('desc')" class="btn btn-sm btn-primary">Sort by Price (Desc)</button>
+                </div>
                 <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
                 <table v-if="!loading && products.length" class="table table-striped">
                     <thead>
@@ -52,6 +52,25 @@
                 </table>
                 <div v-if="!loading && !products.length">No products available</div>
             </div>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg justify-content-center mt-5 mb-1">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <button class="page-link" @click="fetchProducts(currentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    <li v-for="page in totalPages" :key="page" class="page-item"
+                        :class="{ active: page === currentPage }">
+                        <button class="page-link" @click="fetchProducts(page)">{{ page }}</button>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <button class="page-link" @click="fetchProducts(currentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </template>
@@ -81,16 +100,18 @@ export default {
         ...mapState(["isAuthenticated"]),
     },
     methods: {
-        async fetchProducts() {
+        async fetchProducts(page = 1) {
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`${API_ROOT_URL}/products`, {
+                const response = await axios.get(`${API_ROOT_URL}/products?page=${page}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Include token in request headers
                     },
                 });
                 this.products = response.data['hydra:member'];
+                this.currentPage = page;
+                this.totalPages = Math.ceil(response.data['hydra:totalItems'] / 10);
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
@@ -98,41 +119,41 @@ export default {
             }
         },
         async confirmDelete(productId) {
-    // Get the product name before confirming deletion
-    const productToDelete = this.products.find(product => product.id === productId);
-    const productName = productToDelete ? productToDelete.name : 'the product';
+            // Get the product name before confirming deletion
+            const productToDelete = this.products.find(product => product.id === productId);
+            const productName = productToDelete ? productToDelete.name : 'the product';
 
-    const confirmDelete = await this.$swal({
-        title: `Are you sure you want to delete ${productName}?`,
-        text: 'You will not be able to recover this product!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    });
-
-    if (confirmDelete.isConfirmed) {
-        const token = localStorage.getItem('token');
-        try {
-            await axios.delete(`${API_ROOT_URL}/products/${productId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
+            const confirmDelete = await this.$swal({
+                title: `Are you sure you want to delete ${productName}?`,
+                text: 'You will not be able to recover this product!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
             });
-            this.$swal('Deleted!', 'Product deleted successfully', 'success');
-            // Refresh the product list after deletion
-            this.fetchProducts();
-        } catch (error) {
-            console.error('Error deleting product:', error);
-            this.$swal('Error', 'Failed to delete product', 'error');
-        }
-    } else {
-        // Show the name of the product in the alert message
-        this.$swal('Cancelled', `Deleting canceled for ${productName}`, 'info');
-    }
-},
-async sortByPrice(order) {
+
+            if (confirmDelete.isConfirmed) {
+                const token = localStorage.getItem('token');
+                try {
+                    await axios.delete(`${API_ROOT_URL}/products/${productId}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    });
+                    this.$swal('Deleted!', 'Product deleted successfully', 'success');
+                    // Refresh the product list after deletion
+                    this.fetchProducts();
+                } catch (error) {
+                    console.error('Error deleting product:', error);
+                    this.$swal('Error', 'Failed to delete product', 'error');
+                }
+            } else {
+                // Show the name of the product in the alert message
+                this.$swal('Cancelled', `Deleting canceled for ${productName}`, 'info');
+            }
+        },
+        async sortByPrice(order) {
             // Set loading to true while fetching data
             this.loading = true;
 
