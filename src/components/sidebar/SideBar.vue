@@ -33,12 +33,7 @@ export default {
     <SidebarLink to="/orders" icon="fa fa-shopping-cart">Orders</SidebarLink>
     <SidebarLink to="/inventory" icon="fa fa-building">Inventory</SidebarLink>
     <SidebarLink to="/users" icon="fa fa-user">Users</SidebarLink>
-
-    
-    <!--
-    <SidebarLink to="/sectors" icon="fa fa-shopping-cart">Pedidos</SidebarLink>
-    <SidebarLink to="/cicles" icon="fa fa-users">Clientes</SidebarLink>
-    -->
+    <SidebarLink to="/contacts" icon="fa fa-envelope">Contacts</SidebarLink>
 
     <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
       <i class="fas fa-angle-double-left" />
