@@ -26,7 +26,8 @@ export default {
     <SidebarLink to="/products" icon="fa-solid fa-gift">Products</SidebarLink>
     <SidebarLink to="/addproduct" icon="fa fa-plus-circle ">Add Product</SidebarLink>
     <SidebarLink to="/edit-product" icon="fa fa-pencil ">Edit Product</SidebarLink>
-
+    <SidebarLink to="/brands" icon="fa fa-tag">Brands</SidebarLink>
+    <SidebarLink to="/addbrand" icon="fa fa-plus-circle ">Add Brand</SidebarLink>
     <SidebarLink to="/categories" icon="fa fa-list-ul">Categories</SidebarLink>
     <SidebarLink to="/addcategory" icon="fa fa-plus-circle">Add Category</SidebarLink>
     <SidebarLink to="/editcategory" icon="fa fa-pencil">Edit Category</SidebarLink>
