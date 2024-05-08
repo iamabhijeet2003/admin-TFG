@@ -15,3 +15,4 @@ export const UserView = () => import('../views/user/UsersView.vue');
 export const EditCategory = () => import('@/components/forms/EditCategoryForm.vue');
 export const ContactList = () => import('../views/contact/ContactList.vue');
 export const Error404 = () => import("@/components/errors/NotFound404.vue");
+export const AddBrand = () => import("@/views/brand/AddBrand.vue");
