@@ -103,7 +103,13 @@ const routes = [
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: components.Error404,
-  }
+  },
+  {
+    path: "/addbrand",
+    name: "addbrand",
+    component: components.AddBrand,
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = createRouter({
