@@ -5,6 +5,7 @@ export default createStore({
   state: {
     user: null,
     token: null,
+    username: null,
     isAuthenticated: false,
   },
   getters: {
@@ -18,6 +19,9 @@ export default createStore({
     },
     setToken(state, token) {
       state.token = token;
+    },
+    setUsername(state, username) {
+      state.username = username; 
     },
     setAuthentication(state, isAuthenticated) {
       state.isAuthenticated = isAuthenticated;
@@ -33,10 +37,11 @@ export default createStore({
       }
     },
     logout({ commit }) {
-      localStorage.removeItem('token'); 
-      commit('setToken', null); 
-      commit('setAuthentication', false); 
-      commit('setUser', null); 
+      localStorage.removeItem('token');
+      commit('setToken', null);
+      commit('setAuthentication', false);
+      commit('setUser', null);
+      commit('setUsername', null);
       location.reload();
     },
   },
