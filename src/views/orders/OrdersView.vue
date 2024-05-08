@@ -1,3 +1,4 @@
+<!-- /admin-proyecto-02/src/views/orders/OrdersView.vue -->
 <template>
     <div class="container">
         <h1 class="h1 text-center">Orders</h1>
@@ -25,6 +26,11 @@
                             {{ getStatusText(order.prepared) }}
                         </span>
                     </td>
+                    <td>
+                        <button @click="updatePreparedStatus(order.id, !order.prepared)">
+                            {{ order.prepared ? 'Mark as Unprepared' : 'Mark as Prepared' }}
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -33,7 +39,7 @@
 
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 export default {
     data() {
         return {
@@ -87,6 +93,35 @@ export default {
                 return 'text-danger fw-bolder fs-5';
             } else {
                 return 'text-warning fw-bolder fs-5';
+            }
+        },
+        async updatePreparedStatus(orderId, prepared) {
+            try {
+                const token = localStorage.getItem('token');
+                await axios.patch(`http://localhost:8000/api/orders/${orderId}`, {
+                    prepared: prepared
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/merge-patch+json'
+                    }
+                });
+                // Update local orders data after successful update
+                const updatedOrders = this.orders.map(order => {
+                    if (order.id === orderId) {
+                        return { ...order, prepared: prepared };
+                    }
+                    return order;
+                });
+                this.orders = updatedOrders;
+                Swal.fire({
+                    title: 'Success!',
+                    text: `Order status has been updated to ${prepared ? 'prepared' : 'unprepared'}. An email has been sent to the user.`,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } catch (error) {
+                console.error('Error updating prepared status:', error);
             }
         }
     }
