@@ -130,7 +130,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setUser", "setToken"]),
+    ...mapMutations(["setUser", "setToken", "setUsername"]),
     async login(e) {
       e.preventDefault();
       this.loading = true;
@@ -154,15 +154,16 @@ export default {
         console.log("Login response:", response);
         // Modify subsequent API requests to include the JWT token
         if (response.ok) {
-          const { token, user_id } = await response.json();
+          const { token, user_id,username } = await response.json();
           console.log("Token:", token);
 
           this.setUser(user_id);
           this.setToken(token);
+          this.setUsername(username);
           console.log("the current user id is: ", user_id)
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-
+          localStorage.setItem('username', username)
           // Redirect to products page on successful login
           //this.$router.push({ name: 'products' });
           //console.log("Login successful!");
