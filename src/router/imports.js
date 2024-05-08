@@ -16,3 +16,4 @@ export const EditCategory = () => import('@/components/forms/EditCategoryForm.vu
 export const ContactList = () => import('../views/contact/ContactList.vue');
 export const Error404 = () => import("@/components/errors/NotFound404.vue");
 export const AddBrand = () => import("@/views/brand/AddBrand.vue");
+export const ListBrands = () => import("@/views/brand/ListBrands.vue");
