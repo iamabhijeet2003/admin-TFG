@@ -11,23 +11,6 @@
             <li class="nav-item">
               <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
             <li class="nav-item" style="cursor: pointer;">
               <KeepAlive>
                 <router-link v-if="!isLoggedIn" to="/login" class="nav-link text-white me-2">
@@ -43,6 +26,10 @@
                   <span class="text-black fw-bold">Logout</span>
                 </div>
               </KeepAlive>
+            </li>
+            <!-- Display username -->
+            <li class="nav-item">
+              <span v-if="isLoggedIn" class="nav-link">Logged in as, {{ getUsernameFromLocalStorage() }}</span>
             </li>
           </ul>
         </div>
@@ -70,6 +57,9 @@ export default {
     handleLogout() {
       this.logout(); // Call the logout action when the logout button is clicked
     },
+    getUsernameFromLocalStorage() {
+      return localStorage.getItem('username'); // Retrieve username from local storage
+    }
   }
 
 }
