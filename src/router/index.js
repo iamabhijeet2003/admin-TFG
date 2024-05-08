@@ -110,6 +110,12 @@ const routes = [
     component: components.AddBrand,
     meta: { requiresAuth: true }
   },
+  {
+    path: "/brands",
+    name: "brands",
+    component: components.ListBrands,
+    meta: { requiresAuth: true }
+  }
 ]
 
 const router = createRouter({
