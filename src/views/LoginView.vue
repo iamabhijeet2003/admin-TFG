@@ -120,6 +120,7 @@
 <script>
 
 import { mapMutations } from "vuex";
+import Swal from 'sweetalert2';
 export default {
   data: () => {
     return {
@@ -154,20 +155,37 @@ export default {
         console.log("Login response:", response);
         // Modify subsequent API requests to include the JWT token
         if (response.ok) {
-          const { token, user_id } = await response.json();
+          const { token, user_id , role } = await response.json();
           console.log("Token:", token);
 
-          this.setUser(user_id);
-          this.setToken(token);
-          console.log("the current user id is: ", user_id)
-          localStorage.setItem("token", token);
-          localStorage.setItem("user_id", user_id);
+          if (role.includes("ROLE_ADMIN")) {
+            this.setUser(user_id);
+            this.setToken(token);
+            console.log("The current user id is:", user_id);
+            localStorage.setItem("token", token);
+            localStorage.setItem("user_id", user_id);
+            localStorage.setItem("role", role);
+
+            // Redirect to the home page on successful login
+            this.$router.push({ name: 'Home' });
+            console.log("Login successful!");
+          } else {
+            this.errorMessage = "You do not have the necessary permissions to access this page.";
+            console.error("Login failed:", this.errorMessage);
+
+
+            Swal.fire({
+              icon: 'error',
+              title: 'Access Denied',
+              text: this.errorMessage,
+              footer: '<a href="https://proyecto-final-abhi.vercel.app/">Still you can access to the store.</a>'
+            });
+          }
 
           // Redirect to products page on successful login
           //this.$router.push({ name: 'products' });
           //console.log("Login successful!");
-          this.$router.push({ name: 'Home' });
-          console.log("Login successful!");
+
         } else {
 
           this.errorMessage = "Incorrect email or password";
