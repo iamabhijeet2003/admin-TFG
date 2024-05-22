@@ -1,60 +1,70 @@
 <template>
-  <div class="text-center">
-    <apexcharts width="550" type="bar" :options="chartOptions" :series="series"></apexcharts>
-    <h4 class="h4 text-center">Categorias de productos con mas ventas</h4>
+  <div id="chart">
+    <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
 <script>
-import VueApexCharts from 'vue3-apexcharts'
-import axios from 'axios';
+import VueApexCharts from 'vue3-apexcharts';
+
 export default {
-  name: 'VueChart',
   components: {
-    apexcharts: VueApexCharts,
+    apexchart: VueApexCharts,
   },
-  data: function () {
+  data() {
     return {
+      series: [],
       chartOptions: {
         chart: {
-          id: 'vuechart-example',
+          width: 380,
+          type: 'pie',
         },
-        xaxis: {
-          categories: [],
-        },
-      },
-      series: [{
-        name: 'ventas',
-        data: [30, 40, 45, 50, 49, 60, 70, 81]
-      }]
-    }
+        labels: ['Prepared', 'Not Prepared'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      }
+    };
+  },
+  mounted() {
+    // Fetch and process the orders data from the API
+    this.fetchOrdersData();
   },
   methods: {
-    async updateChart() {
+    async fetchOrdersData() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+        const response = await fetch('http://127.0.0.1:8000/api/orders', {
           headers: {
-            'Authorization': `Bearer ${token}`, 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         });
-        const categories = response.data; 
+        const data = await response.json();
 
-        
-        this.chartOptions = {
-          ...this.chartOptions, 
-          xaxis: {
-            categories: categories, 
-          }
-        };
+        // Process the API response to extract the prepared status
+        const orders = data['hydra:member'];
+        const preparedCount = orders.filter(order => order.prepared).length;
+        const notPreparedCount = orders.length - preparedCount;
 
+        // Set the series data for the chart
+        this.series = [preparedCount, notPreparedCount];
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching orders data:', error);
       }
     }
   }
-}
+};
 </script>
+
 <style scoped>
 button {
   background: #26E6A4;
