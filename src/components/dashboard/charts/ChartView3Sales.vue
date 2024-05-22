@@ -4,6 +4,7 @@
   </div>
 </template>
 
+
 <script>
 import VueApexCharts from 'vue3-apexcharts';
 
@@ -29,7 +30,7 @@ export default {
           curve: 'smooth'
         },
         title: {
-          text: 'Sales Analysis by Day',
+          text: 'Sales Analysis',
           align: 'left'
         },
         subtitle: {
@@ -37,10 +38,15 @@ export default {
           align: 'left'
         },
         xaxis: {
-          type: 'datetime',
+          categories: [],
+          title: {
+            text: 'Order'
+          }
         },
         yaxis: {
-          opposite: true
+          title: {
+            text: 'Amount'
+          }
         },
         legend: {
           horizontalAlign: 'left'
@@ -55,50 +61,38 @@ export default {
     };
   },
   mounted() {
-    // Simulate fetching sales data
+    // Fetch and process the sales data from the API
     this.fetchSalesData();
   },
   methods: {
-    fetchSalesData() {
-      // Dummy sales data for testing
-      const dummySalesData = {
-        "2022-01-01": 11236,
-        "2022-01-02": 3132,
-        "2022-01-03": 1078,
-        "2022-01-04": 4616,
-        "2022-01-05": 15172,
-        "2022-01-06": 9094,
-        "2022-01-07": 9,
-        "2022-01-08": 1145,
-        "2022-01-09": 5465,
-        "2022-01-10": 9094,
-        "2022-01-11": 4566
-      };
+    async fetchSalesData() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://127.0.0.1:8000/api/orders', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
 
-      const dummyFormattedDates = [
-        "2022-01-01",
-        "2022-01-02",
-        "2022-01-03",
-        "2022-01-04",
-        "2022-01-05",
-        "2022-01-06",
-        "2022-01-07",
-        "2022-01-08",
-        "2022-01-09",
-        "2022-01-10",
-        "2022-01-11"
-      ];
+        // Process the API response to extract the sales data
+        const salesData = data['hydra:member'].map(order => order.total);
 
-      // Set the series data and formatted dates
-      this.series = [{
-        name: 'Sales',
-        data: dummyFormattedDates.map(date => dummySalesData[date])
-      }];
-      this.chartOptions.xaxis.categories = dummyFormattedDates;
+        // Set the series data for the chart
+        this.series = [{
+          name: 'Sales',
+          data: salesData
+        }];
+        this.chartOptions.xaxis.categories = salesData.map((_, index) => index + 1);
+      } catch (error) {
+        console.error('Error fetching sales data:', error);
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 #chart {
