@@ -1,12 +1,11 @@
 <template>
     <div class="container mt-5">
-      <h2 class="mb-4">User Management</h2>
-      <table class="table table-striped">
+      <h2 class="mb-4 fs-2 fw-bold">User Management</h2>
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th>ID</th>
             <th>Email</th>
-            <th>Roles</th>
             <th>First Name</th>
             <th>Last Name</th>
           </tr>
