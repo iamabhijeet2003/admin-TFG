@@ -114,7 +114,6 @@
       </div>
     </div>
   </div>
-  <particles-bg type="random" :canvas="{ backgroundColor: '#ffffff' }" :bg="true" />
 </template>
 
 <script>
