@@ -8,9 +8,12 @@
                     <li v-for="brand in brands" :key="brand.id"
                         class="list-group-item d-flex justify-content-between align-items-center">
                         {{ brand.name }}
-                        <button @click="editBrand(brand.id)" class="btn btn-primary">Edit</button>
+                        <div>
+                            <button @click="editBrand(brand.id)" class="btn btn-primary">Edit <i class="bi bi-pencil-square"></i></button>
+                            <button @click="deleteBrand(brand.id)" class="btn btn-danger ms-2">Delete <i class="bi bi-trash3"></i></button>
+                        </div>
                     </li>
-                    
+
                 </ul>
                 <div v-if="errorMessage" class="alert alert-danger mt-4" role="alert">
                     {{ errorMessage }}
@@ -24,6 +27,7 @@
 <script>
 import axios from 'axios';
 import EditBrand from './EditBrand.vue';
+import Swal from 'sweetalert2';
 export default {
     data() {
         return {
@@ -58,6 +62,41 @@ export default {
             // Set the editingBrand flag to true and store the ID of the brand being edited
             this.editingBrand = true;
             this.editingBrandId = brandId;
+        },
+        async deleteBrand(brandId) {
+            try {
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                });
+
+                if (result.isConfirmed) {
+                    const token = localStorage.getItem('token');
+                    await axios.delete(`http://localhost:8000/api/brands/${brandId}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    Swal.fire(
+                        'Deleted!',
+                        'The brand has been deleted.',
+                        'success'
+                    );
+                    this.fetchBrands();
+                }
+            } catch (error) {
+                Swal.fire(
+                    'Error!',
+                    'There was an error deleting the brand.',
+                    'error'
+                );
+                console.error('Error deleting brand:', error);
+            }
         }
     }
 };
