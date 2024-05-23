@@ -1,5 +1,6 @@
 <template>
     <div class="container" style="margin-left: 250px;">
+        <router-link to="/addbrand" class="btn btn-success mt-2 ms-5">Add new Brand</router-link>
         <div
             class="product-ratings tw-relative tw-mx-auto tw-rounded-lg tw-bg-gradient-to-tr tw-from-pink-300 tw-to-blue-300 tw-p-0.5 tw-shadow-lg mx-5 mt-4">
             <div class="tw-bg-white tw-p-3 tw-rounded-md m-2">
