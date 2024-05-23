@@ -15,14 +15,6 @@
           <tr v-for="user in users" :key="user.id">
             <td>{{ user.id }}</td>
             <td>{{ user.email }}</td>
-            <td>
-            <span v-if="user.roles && user.roles.length">
-              <span v-for="(role, index) in user.roles" :key="index">
-                {{ role.name }}<span v-if="index !== user.roles.length - 1">, </span>
-              </span>
-            </span>
-            <span v-else>No roles</span>
-          </td>
           <td>
             {{ user.firstName }}
           </td>
