@@ -53,7 +53,7 @@
 
 <script>
 import axios from 'axios';
-
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
     data() {
         return {
@@ -79,7 +79,7 @@ export default {
         async submitForm() {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.post('http://127.0.0.1:8000/api/products', {
+                const response = await axios.post(`${API_ROOT_URL}/products`, {
                     name: this.formData.name,
                     description: this.formData.description,
                     price: this.formData.price,
@@ -115,7 +115,7 @@ export default {
             try {
                 const token = localStorage.getItem('token');
                 // Realizar la solicitud para obtener la lista actualizada de productos
-                const response = await axios.get('http://127.0.0.1:8000/api/products', {
+                const response = await axios.get(`${API_ROOT_URL}/products`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/ld+json'
@@ -130,7 +130,7 @@ export default {
         async fetchCategories() {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+                const response = await axios.get(`${API_ROOT_URL}/categories`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/ld+json'
