@@ -28,7 +28,7 @@
   
   <script>
   import axios from 'axios';
-  
+  import { API_ROOT_URL } from '@/apiConfig';
   export default {
     data() {
       return {
@@ -42,7 +42,7 @@
       async fetchContacts() {
         try {
           const token = localStorage.getItem('token');
-          const response = await axios.get('http://localhost:8000/api/contacts', {
+          const response = await axios.get(`${API_ROOT_URL}/contacts`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
