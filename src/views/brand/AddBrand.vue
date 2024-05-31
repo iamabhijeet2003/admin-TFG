@@ -24,7 +24,7 @@
 
 <script>
 import axios from 'axios';
-
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
     data() {
         return {
@@ -38,7 +38,7 @@ export default {
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.post(
-                    'http://localhost:8000/api/brands',
+                    `${API_ROOT_URL}/brands`,
                     { name: this.brandName },
                     {
                         headers: {
