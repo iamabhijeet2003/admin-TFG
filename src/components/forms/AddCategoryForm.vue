@@ -27,6 +27,7 @@
 
 <script>
 import axios from 'axios';
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
 
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://127.0.0.1:8000/api/categories', {
+        const response = await axios.post(`${API_ROOT_URL}/categories`, {
           "@context": "/api/contexts/Category",
           "@type": "Category",
           "name": this.formData.name,
