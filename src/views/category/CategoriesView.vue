@@ -5,32 +5,6 @@
         <h1 class="text-center h1 mt-3">Categories Page</h1>
         <AddCategory></AddCategory>
 
-        <!-- <div>
-          
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Edit Category
-          </button>
-
-         
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <EditCategoryForm></EditCategoryForm>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
       </div>
       <div class="col-12">
         <div v-if="loading" class="text-center h1"><span class="loader"></span></div>
