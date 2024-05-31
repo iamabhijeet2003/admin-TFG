@@ -7,7 +7,7 @@
 
 <script>
 import VueApexCharts from 'vue3-apexcharts';
-
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
   components: {
     apexchart: VueApexCharts,
@@ -68,7 +68,7 @@ export default {
     async fetchSalesData() {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://127.0.0.1:8000/api/orders', {
+        const response = await fetch(`${API_ROOT_URL}/orders`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
