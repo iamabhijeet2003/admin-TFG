@@ -40,6 +40,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
     data() {
         return {
@@ -53,7 +54,7 @@ export default {
         async fetchOrders() {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8000/api/orders', {
+                const response = await axios.get(`${API_ROOT_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -98,7 +99,7 @@ export default {
         async updatePreparedStatus(orderId, prepared) {
             try {
                 const token = localStorage.getItem('token');
-                await axios.patch(`http://localhost:8000/api/orders/${orderId}`, {
+                await axios.patch(`${API_ROOT_URL}/orders/${orderId}`, {
                     prepared: prepared
                 }, {
                     headers: {
