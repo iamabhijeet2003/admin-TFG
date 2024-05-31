@@ -28,7 +28,7 @@
   
   <script>
   import axios from 'axios';
-  
+  import { API_ROOT_URL } from '@/apiConfig';
   export default {
     data() {
       return {
@@ -42,7 +42,7 @@
       async fetchUsers() {
         try {
           const token = localStorage.getItem('token');
-          const response = await axios.get('http://localhost:8000/api/users', {
+          const response = await axios.get(`${API_ROOT_URL}/users`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -58,6 +58,6 @@
   </script>
   
   <style>
-  /* Add custom styles if needed */
+
   </style>
   
