@@ -29,6 +29,7 @@
 import axios from 'axios';
 import EditBrand from './EditBrand.vue';
 import Swal from 'sweetalert2';
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
     data() {
         return {
@@ -48,7 +49,7 @@ export default {
         async fetchBrands() {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8000/api/brands', {
+                const response = await axios.get(`${API_ROOT_URL}/brands`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -78,7 +79,7 @@ export default {
 
                 if (result.isConfirmed) {
                     const token = localStorage.getItem('token');
-                    await axios.delete(`http://localhost:8000/api/brands/${brandId}`, {
+                    await axios.delete(`${API_ROOT_URL}/brands/${brandId}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
