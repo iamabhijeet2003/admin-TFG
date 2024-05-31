@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import { API_ROOT_URL } from '@/apiConfig';
 export default {
   props: {
     categoryId: {
@@ -49,7 +50,7 @@ export default {
     try {
       const token = localStorage.getItem('token');
       // Fetch categories to populate the dropdown
-      const response = await axios.get(`http://127.0.0.1:8000/api/categories`, {
+      const response = await axios.get(`${API_ROOT_URL}/categories`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/ld+json'
@@ -74,7 +75,7 @@ export default {
     async fetchCategoryData() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://127.0.0.1:8000/api/categories/${this.selectedCategoryId}`, {
+        const response = await axios.get(`${API_ROOT_URL}/categories/${this.selectedCategoryId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/ld+json'
@@ -90,7 +91,7 @@ export default {
     async submitForm() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.put(`http://127.0.0.1:8000/api/categories/${this.selectedCategoryId}`, {
+        const response = await axios.put(`${API_ROOT_URL}/categories/${this.selectedCategoryId}`, {
           name: this.formData.name,
           description: this.formData.description,
         }, {
