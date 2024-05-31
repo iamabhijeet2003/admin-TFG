@@ -118,7 +118,7 @@ export default {
             try {
                 const productId = this.$route.params.id;
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://127.0.0.1:8000/api/products/${productId}`,{
+                const response = await axios.get(`${API_ROOT_URL}/products/${productId}`,{
                     headers: {
                         'Content-Type': 'application/ld+json',
                         Authorization: `Bearer ${token}`,
@@ -132,7 +132,7 @@ export default {
         async fetchCategories() {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/categories',{
+                const response = await axios.get(`${API_ROOT_URL}/categories`,{
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/ld+json'
