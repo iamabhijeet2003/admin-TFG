@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="margin-left: 250px;">
         <div class="row">
             <div class="col">
                 <h1 class="text-center h1 mt-3">Products Page</h1>
