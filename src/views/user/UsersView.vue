@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container mt-5" style="margin-left: 250px;">
       <h2 class="mb-4 fs-2 fw-bold">User Management</h2>
       <table class="table table-striped table-hover">
         <thead>
