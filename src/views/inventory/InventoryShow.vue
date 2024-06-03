@@ -1,6 +1,6 @@
 <!--admin/src/views/inventory/InventoryShow.vue-->
 <template>
-  <div class="container">
+  <div class="container" style="margin-left: 250px;">
     <div class="row">
       <div class="col mx-5 px-4">
         <h1>Inventory</h1>
