@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="margin-left: 250px;">
         <div class="row">
             <h1 class="h1 text-center text-primary">Edit Product</h1>
             <div class="col">
