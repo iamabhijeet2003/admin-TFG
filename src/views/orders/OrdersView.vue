@@ -1,6 +1,6 @@
 <!-- /admin-proyecto-02/src/views/orders/OrdersView.vue -->
 <template>
-    <div class="container">
+    <div class="container" style="margin-left: 250px;">
         <h1 class="h1 text-center">Orders</h1>
         <table class="table table-striped">
             <thead>
