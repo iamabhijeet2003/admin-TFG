@@ -1,6 +1,6 @@
 <!--src/views/EditProductPage.vue-->
 <template>
-    <div class="container">
+    <div class="container" style="margin-left: 250px;">
       <div class="row">
         <div class="col">
           <h1 class="h1 text-center mt-5">Edit Product</h1>
