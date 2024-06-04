@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin-left: 250px;">
       <h1 class="h1 text-center">Add New Product</h1>
       <AddProductForm />
     </div>
