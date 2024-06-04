@@ -17,7 +17,7 @@
         <label for="created_at">Created At</label>
         <input class="form-control" type="date" name="created_at" id="created_at">
       </div> -->
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary mt-4">Submit</button>
       <div v-if="message" :class="messageClass">{{ message }}</div>
 
     </form>
